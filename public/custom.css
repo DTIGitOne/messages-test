@@ -28,7 +28,6 @@
    flex-direction: column;
    align-items: flex-start;
    scrollbar-width: hidden;
-   flex-wrap: wrap;
 }
 
 #messageInput {

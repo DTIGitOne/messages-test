@@ -38,5 +38,4 @@ sendMessage2.addEventListener('click' , function(){
       meassage2.innerHTML = messageInput2.value;
       meassageDiv2.append(meassage2);
    }
-   
 });
