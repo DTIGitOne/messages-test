@@ -1,0 +1,85 @@
+#phone {
+   width: 70%;
+   height: 100%;
+   position: absolute;
+}
+
+#screenBox {
+   height: 100%;
+   width: 70%;
+   position: absolute;
+   z-index: 10;
+}
+
+#screen {
+   width: 70%;
+   height: 85%;
+   background-color: transparent;
+}
+
+#messages {
+   height: 90%;
+   width: 100%;
+   box-sizing: border-box;
+   padding: 10px 34px 5px 42px;
+   overflow-y: auto;
+   overflow-x: hidden;
+   display: flex;
+   flex-direction: column;
+   align-items: flex-start;
+   scrollbar-width: hidden;
+   flex-wrap: wrap;
+}
+
+#messageInput {
+   height: 10%;
+   width: 100%;
+   box-sizing: border-box;
+   background-color: blue;
+}
+
+#filtersBox {
+   height: 10%;
+   width: 100%;
+   background-color: red;
+   padding: 10px 34px 5px 42px;
+}
+
+.meassageDiv1 {
+   width: 100%;
+   height: auto;
+   display: flex;
+   justify-content: flex-start;
+}
+
+.meassageDiv2 {
+   width: 100%;
+   height: auto;
+   display: flex;
+   justify-content: flex-end;
+}
+
+.message1 {
+    padding: 10px;
+    background-color: #36EC8B;
+    border-radius: 15px;
+    width: auto;
+    max-width: 80%;
+    margin-top: 15px;
+    display: inline-block;
+    word-wrap: break-word;
+    z-index: 50;
+}
+
+.message2 {
+   padding: 10px;
+   background-color: #36EC8B;
+   border-radius: 15px;
+   width: auto;
+   max-width: 80%;
+   margin-top: 15px;
+   display: inline-block;
+   word-wrap: break-word;
+   z-index: 50;
+   direction: rtl;
+}
