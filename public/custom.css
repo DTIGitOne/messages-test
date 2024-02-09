@@ -37,10 +37,14 @@
    background-color: blue;
 }
 
+#msgInput {
+   height: 50%;
+   width: 100%;
+}
+
 #filtersBox {
    height: 10%;
    width: 100%;
-   background-color: red;
    padding: 10px 34px 5px 42px;
 }
 
@@ -58,10 +62,17 @@
    justify-content: flex-end;
 }
 
+.sendMessage {
+   width: 100%;
+   height: 100%;
+   background-color: red;
+}
+
 .message1 {
-    padding: 10px;
+    padding: 10px 3px 10px 10px;
     background-color: #36EC8B;
-    border-radius: 15px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
     width: auto;
     max-width: 80%;
     margin-top: 15px;
@@ -71,9 +82,10 @@
 }
 
 .message2 {
-   padding: 10px;
+   padding: 10px 3px 10px 10px;
    background-color: #36EC8B;
-   border-radius: 15px;
+   border-top-right-radius: 15px;
+   border-bottom-right-radius: 15px;
    width: auto;
    max-width: 80%;
    margin-top: 15px;
@@ -81,4 +93,29 @@
    word-wrap: break-word;
    z-index: 50;
    direction: rtl;
+}
+
+.checkmark2 {
+   height: 20px;
+   width: 30px;
+   background-color: #36EC8B;
+   margin-top: 15px;
+   display: flex;
+   justify-content: center;
+   align-items:center;
+   border-top-left-radius: 15px;
+   border-bottom-left-radius: 15px;
+   padding: 5px 15px;
+}
+.checkmark1 {
+   height: 20px;
+   width: 30px;
+   background-color: #36EC8B;
+   margin-top: 15px;
+   display: flex;
+   justify-content: center;
+   align-items:center;
+   border-top-right-radius: 15px;
+   border-bottom-right-radius: 15px;
+   padding: 5px 15px;
 }
