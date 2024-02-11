@@ -33,7 +33,11 @@
          <img id="phone" src="../images/phone.webp" alt="">
       </div>
       <div id="right" class="w-1/5 h-full flex justify-center items-center flex-col gap-2">
-         <h1 class="text-6xl mb-6">User 2</h1>
+         <div>
+            <input id="usernameInput2" type="text" class="absolute z-10 border-white border bg-purple-500 invisible" maxlength="10" placeholder="New username">
+            <div id="usernameClick2" class="text-3xl z-50 cursor-pointer" >Change your user name</div>
+         </div>
+         <h1 id="usernameBox2" class="text-6xl mb-6">User 2</h1>
          <div id="user2Box" class="w-full h-40 border-2 bg-white border-black rounded-2xl flex justify-center items-center">
             <input id="messageInput2" type="text" class="border-2 border-black rounded-l-2xl p-1 text-xl" placeholder="send message">
             <button id="sendMessage2" class="h-10 w-9 rounded-r-2xl bg-blue-400 border-black border-2 hover:bg-blue-500 flex justify-center items-center"><i class="material-icons text-white">send</i></button>         

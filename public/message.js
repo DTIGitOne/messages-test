@@ -46,20 +46,28 @@ let phoneWidth = messages.offsetWidth;
 
 let typeingCounter = 0; 
 
+let sendingDiv1 = document.createElement("div");
 let sendingTextBox = document.createElement("div");
 
 $(messageInput1).keydown(function(event) {
    typeingCounter++
 
-   if (typeingCounter === 1) {
+   if (typeingCounter === 1 || messageInput1.value !== "") {
+
+      sendingDiv1.className = "sendingDiv1";
+      messages.append(sendingDiv1)
 
       sendingTextBox.className = "sendMessage";
-         msgInput.append(sendingTextBox);
+      sendingDiv1.append(sendingTextBox);
+
+      sendingTextBox.scrollIntoView({ behavior: "smooth", block: "end" });
    }
 });
 
 sendMessage1.addEventListener("click" , function(){
-   sendingTextBox.remove();
+   if (messageInput1.value !== "") {
+      sendingDiv1.remove();
+   } 
 });
 
 $(messageInput1).keyup(function(event) {
@@ -75,12 +83,14 @@ $(messageInput1).keyup(function(event) {
    
 });
 
+let messageCounter = 0;
 
 sendMessage1.addEventListener('click' , function(){
 
-   if (messageInput1 === "") {
+   if (messageInput1.value === "") {
       console.log("error");
    } else {
+      setTimeout(() => {
 
       let meassageDiv11 = document.createElement("div");
       meassageDiv11.className = "meassageDiv11";
@@ -96,6 +106,7 @@ sendMessage1.addEventListener('click' , function(){
       meassageDiv1.append(meassage1);
 
       let message1Width = meassage1.clientWidth;
+      let message1Hidth = meassage1.clientHeight;
 
       const utcDate = new Date();
       const offsetMinutes = utcDate.getTimezoneOffset();
@@ -113,14 +124,22 @@ sendMessage1.addEventListener('click' , function(){
        }
        
       let dateBox = document.createElement("div");
+
+      let dateBoxWidth = dateBox.clientWidth;
+
       dateBox.className = "dateBox";
       dateBox.style.width = message1Width + "px";
+      if (message1Hidth > 37) {
+         dateBox.style.width = message1Width - 1 + "px";
+      }
       meassageDiv11.append(dateBox);
-      console.log(message1Width);
 
       let messageTime = document.createElement("div");
       messageTime.innerHTML = formattedTime;
       dateBox.prepend(messageTime);
+      
+      console.log(message1Width);
+      console.log(dateBoxWidth);
 
       let checkmark = document.createElement("div");
       checkmark.className = "checkmark material-icons";
@@ -130,23 +149,67 @@ sendMessage1.addEventListener('click' , function(){
    
       messageInput1.value = "";
       typeingCounter = 0;
+
+      dateBox.scrollIntoView({ behavior: "smooth", block: "end" });
+      }, 200);
    }
+});
+
+let goBackButton2 = document.createElement("div");
+
+usernameClick2.addEventListener("click" , function () {
+
+   goBackButton2.innerHTML = "go back";
+   goBackButton2.className = "cursor-pointer";
+   right.prepend(goBackButton2);
+ 
+   usernameClick2.style.visibility = "hidden";
+   usernameInput2.style.visibility = "visible";
+});
+
+goBackButton2.addEventListener("click" , function (){
+   goBackButton2.remove();
+   usernameInput2.style.visibility = "hidden";
+   usernameClick2.style.visibility = "visible";
+})
+
+
+$(document).ready(function(){
+   $('input').keypress(function(event){
+       if(event.which === 13){
+         usernameBox2.innerHTML = usernameInput2.value;
+
+         if (usernameBox2.innerHTML === "") {
+            usernameBox2.innerHTML = "User 2";
+         }
+       }
+   });
 });
 
 let typeingCounter2 = 0;
 
+let sendingDiv2 = document.createElement("div");
+
 $(messageInput2).keydown(function(event) {
    typeingCounter2++
 
-   if (typeingCounter2 === 1) {
+   if (typeingCounter2 === 1 || messageInput2.value !== "") {
+
+      sendingDiv2.className = "sendingDiv2";
+      messages.append(sendingDiv2)
 
       sendingTextBox.className = "sendMessage";
-         msgInput.append(sendingTextBox);
+      sendingDiv2.append(sendingTextBox);
+
+      sendingTextBox.scrollIntoView({ behavior: "smooth", block: "end" });
+      
    }
 });
 
 sendMessage2.addEventListener("click" , function(){
-   sendingTextBox.remove();
+   if (messageInput2.value !== "") {
+      sendingDiv2.remove();
+   }
 });
 
 $(messageInput2).keyup(function(event) {
@@ -164,41 +227,68 @@ $(messageInput2).keyup(function(event) {
 
 sendMessage2.addEventListener('click' , function(){
 
-   if (messageInput2 === "") {
+   if (messageInput2.value === "") {
       console.log("error");
    } else {
-      
-      let meassageDiv2 = document.createElement("div");
-      meassageDiv2.className = "meassageDiv2";
-      messages.append(meassageDiv2);
+      setTimeout(() => {
 
-      let meassage2 = document.createElement("p");
-      meassage2.className = "message2";
-      meassage2.innerHTML = messageInput2.value;
-      meassageDiv2.append(meassage2);
-
-      let message2Height = meassage2.clientHeight;
-
-      let markDiv = document.createElement("div");
-      markDiv.className = "checkmark2";
-      markDiv.style.height = message2Height + "px";
-      meassageDiv2.prepend(markDiv)
+         let meassageDiv22 = document.createElement("div");
+         meassageDiv22.className = "meassageDiv22";
+         messages.append(meassageDiv22);
    
-      let checkmark = document.createElement("div");
-      checkmark.className = "checkmark material-icons";
-      checkmark.style.fontSize = "20px";
-      checkmark.innerHTML = "check";
-      markDiv.prepend(checkmark);
+         let meassageDiv2 = document.createElement("div");
+         meassageDiv2.className = "meassageDiv2";
+         meassageDiv22.append(meassageDiv2);
+   
+         let meassage2 = document.createElement("p");
+         meassage2.className = "message2";
+         meassage2.innerHTML = messageInput2.value;
+         meassageDiv2.append(meassage2);
+   
+         let message2Width = meassage2.clientWidth;
+         let message2Hidth = meassage2.clientHeight;
+   
+         const utcDate = new Date();
+         const offsetMinutes = utcDate.getTimezoneOffset();
+         const gmtPlusOneOffset = 1 * 60 * 60 * 1000;
+         const gmtPlusOneDate = new Date(utcDate.getTime() + gmtPlusOneOffset);
+         
+         const hours = gmtPlusOneDate.getHours() - 1;
+         const minutes = gmtPlusOneDate.getMinutes();
+         const seconds = gmtPlusOneDate.getSeconds();
+   
+         const formattedTime = `${padZero(hours)}:${padZero(minutes)}`;
+         
+         function padZero(value) {
+            return value < 10 ? '0' + value : value;
+          }
+          
+         let dateBox = document.createElement("div");
+   
+         let dateBoxWidth = dateBox.clientWidth;
+   
+         dateBox.className = "dateBox";
+         dateBox.style.width = message2Width + "px";
+         if (message2Hidth > 37) {
+            dateBox.style.width = message2Width - 1 + "px";
+         }
+         meassageDiv22.append(dateBox);
+   
+         let messageTime = document.createElement("div");
+         messageTime.innerHTML = formattedTime;
+         dateBox.prepend(messageTime);
+         
+         let checkmark = document.createElement("div");
+         checkmark.className = "checkmark material-icons";
+         checkmark.style.fontSize = "20px";
+         checkmark.innerHTML = "check";
+         dateBox.append(checkmark);
+      
+         messageInput2.value = "";
+         typeingCounter2 = 0;
 
-      if (message2Height > 47) {
-         markDiv.style.alignItems = "flex-end";
-         checkmark.style.paddingBottom = "5px";
-      } else {
-         markDiv.style.alignItems = "center";
-         checkmark.style.paddingBottom = "0px";
-      }
-
-      messageInput2.value = "";
-      typeingCounter2 = 0;
+         dateBox.scrollIntoView({ behavior: "smooth", block: "end" });
+      
+         }, 200);
    }
-});
+});   

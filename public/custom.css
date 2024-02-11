@@ -27,7 +27,7 @@
    display: flex;
    flex-direction: column;
    align-items: flex-start;
-   scrollbar-width: hidden;
+   scrollbar-width: none;
 }
 
 #messageInput {
@@ -76,17 +76,46 @@
    flex-direction: column;
 }
 
-.meassageDiv2 {
+.meassageDiv22 {
    width: 100%;
    height: auto;
    display: flex;
+   flex-direction: column;
+   direction: rtl;
+}
+
+.meassageDiv2 {
+   width: 100%;
+   height: 100%;
+   display: flex;
+   overflow-y: visible;
+}
+
+.sendingDiv1 {
+   width: 100%;
+   height: 50px;
+   display: flex;
+   justify-content: flex-start;
+   box-sizing: border-box;
+   margin-top: 15px;
+   padding: 5px 0px 5px 0px;
+}
+
+.sendingDiv2 {
+   width: 100%;
+   height: 50px;
+   display: flex;
    justify-content: flex-end;
+   box-sizing: border-box;
+   margin-top: 15px;
+   padding: 5px 0px 5px 0px;
 }
 
 .sendMessage {
-   width: 100%;
+   width: 35%;
    height: 100%;
    background-color: red;
+   border-radius: 10px;
 }
 
 .message1 {
@@ -107,8 +136,7 @@
 .message2 {
    padding: 10px 6px 10px 10px;
    background-color: #36EC8B;
-   border-top-right-radius: 15px;
-   border-bottom-right-radius: 15px;
+   border-top-left-radius: 15px;
    width: auto;
    max-width: 80%;
    margin-top: 15px;
@@ -116,6 +144,9 @@
    word-wrap: break-word;
    z-index: 50;
    font-size: 18px;
+   position: relative;
+   min-width: 70px;
+   direction: ltr;
 }
 
 .checkmark2 {
@@ -130,6 +161,7 @@
    border-bottom-left-radius: 15px;
    padding: 5px 15px;
 }
+
 .checkmark1 {
    height: 20px;
    width: 30px;
@@ -144,7 +176,7 @@
 }
 
 .dateBox {
-   height: 25px;
+   height: 28px;
    background-color: #36EC8B;
    border-bottom-left-radius: 15px;
    border-bottom-right-radius: 15px;
@@ -153,4 +185,7 @@
    font-size: 11px;
    justify-content: space-between;
    padding: 5px 6px;
+   box-sizing: border-box;
+   position: relative;
+   min-width: 70px;
 }
