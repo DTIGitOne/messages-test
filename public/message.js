@@ -8,7 +8,129 @@ let msgInput = document.getElementById("msgInput");
 let usernameInput = document.getElementById("usernameInput");
 let usernameClick = document.getElementById("usernameClick");
 let usernameBox = document.getElementById("usernameBox");
+let usernameBox2 = document.getElementById("usernameBox2");
 let left = document.getElementById("left");
+
+
+let msgRegex = /^msg.*/;
+
+for (let p=0 ; p < localStorage.length ; p++) {
+
+   let key = localStorage.key(p);
+   
+   if (msgRegex.test(key)) {
+      let dataStorage = localStorage.getItem(key);
+        
+      if (dataStorage !== null) {
+         let parsedData = JSON.parse(dataStorage);
+        
+         if (parsedData.msgSide === "prim") {
+     
+           let meassageDiv11 = document.createElement("div");
+           meassageDiv11.className = "meassageDiv11";
+           messages.append(meassageDiv11);
+     
+           let meassageDiv1 = document.createElement("div");
+           meassageDiv1.className = "meassageDiv1";
+           meassageDiv11.append(meassageDiv1);
+     
+           let meassage1 = document.createElement("p");
+           meassage1.className = "message1";
+           meassage1.innerHTML = parsedData.value;
+           meassageDiv1.append(meassage1);
+     
+           let message1Width = meassage1.getBoundingClientRect().width;
+     
+           let dateBox = document.createElement("div");
+     
+           dateBox.className = "dateBox";
+           dateBox.style.width = message1Width + "px";
+           meassageDiv11.append(dateBox);
+     
+           let messageTime = document.createElement("div");
+           messageTime.innerHTML = parsedData.sentTime;
+           dateBox.prepend(messageTime);
+           
+     
+           let checkmark = document.createElement("div");
+           checkmark.className = "checkmark material-icons";
+           checkmark.style.fontSize = "20px";
+           checkmark.style.color = "black";
+           checkmark.innerHTML = "check";
+           dateBox.append(checkmark);
+     
+           let dateBox2 = document.createElement("div");
+           dateBox2.className = "dateBox2";
+           dateBox2.innerHTML = parsedData.sentDate;
+           meassageDiv1.append(dateBox2);
+     
+           meassageDiv11.addEventListener('mouseover' , function(){
+              checkmark.style.color = "black";
+              dateBox.style.backgroundColor = "#3E8944";
+              meassage1.style.backgroundColor = "#3E8944";
+           });
+            
+           meassageDiv11.addEventListener('mouseleave' , function(){
+              dateBox.style.backgroundColor = "#36EC8B";
+              meassage1.style.backgroundColor = "#36EC8B";
+           });
+         } else if (parsedData.msgSide === "seco") {
+           let meassageDiv22 = document.createElement("div");
+           meassageDiv22.className = "meassageDiv22";
+           messages.append(meassageDiv22);
+     
+           let meassageDiv2 = document.createElement("div");
+           meassageDiv2.className = "meassageDiv2";
+           meassageDiv22.append(meassageDiv2);
+     
+           let meassage2 = document.createElement("p");
+           meassage2.className = "message2";
+           meassage2.innerHTML = parsedData.value;
+           meassageDiv2.append(meassage2);
+     
+           let message2Width = meassage2.getBoundingClientRect().width;
+     
+           let dateBox = document.createElement("div");
+     
+           dateBox.className = "dateBox";
+           dateBox.style.width = message2Width + "px";
+           meassageDiv22.append(dateBox);
+     
+           let messageTime = document.createElement("div");
+           messageTime.innerHTML = parsedData.sentTime;
+           dateBox.prepend(messageTime);
+           
+     
+           let checkmark = document.createElement("div");
+           checkmark.className = "checkmark material-icons";
+           checkmark.style.fontSize = "20px";
+           checkmark.style.color = "black";
+           checkmark.innerHTML = "check";
+           dateBox.append(checkmark);
+     
+           let dateBox2 = document.createElement("div");
+           dateBox2.className = "dateBox2";
+           dateBox2.innerHTML = parsedData.sentDate;
+           meassageDiv2.append(dateBox2);
+     
+           meassageDiv22.addEventListener('mouseover' , function(){
+              checkmark.style.color = "black";
+              dateBox.style.backgroundColor = "#3E8944";
+              meassage2.style.backgroundColor = "#3E8944";
+           });
+            
+           meassageDiv22.addEventListener('mouseleave' , function(){
+              dateBox.style.backgroundColor = "#36EC8B";
+              meassage2.style.backgroundColor = "#36EC8B";
+           });
+         }
+     } else {
+        console.log('Data not found in local storage');
+     }
+  }
+}
+
+
 
 let goBackButton = document.createElement("div");
 
@@ -48,6 +170,9 @@ let typeingCounter = 0;
 
 let sendingDiv1 = document.createElement("div");
 let sendingTextBox = document.createElement("div");
+let sendingTextBox2 = document.createElement("div");
+let sendDots = document.createElement("div");
+let dotsBox = document.createElement("div");
 
 $(messageInput1).keydown(function(event) {
    typeingCounter++
@@ -55,12 +180,22 @@ $(messageInput1).keydown(function(event) {
    if (typeingCounter === 1 || messageInput1.value !== "") {
 
       sendingDiv1.className = "sendingDiv1";
-      messages.append(sendingDiv1)
+      messages.append(sendingDiv1);
 
       sendingTextBox.className = "sendMessage";
+      sendingTextBox.innerHTML = usernameBox.innerHTML + " " + "is typeing";
       sendingDiv1.append(sendingTextBox);
 
       sendingTextBox.scrollIntoView({ behavior: "smooth", block: "end" });
+      
+      sendDots.innerHTML = "...";
+      sendDots.className = "sendDots";  
+      sendingTextBox.append(dotsBox);
+      
+      setTimeout(() => {
+         dotsBox.append(sendDots);
+      }, 200);
+      
    }
 });
 
@@ -105,13 +240,54 @@ sendMessage1.addEventListener('click' , function(){
       meassage1.innerHTML = messageInput1.value;
       meassageDiv1.append(meassage1);
 
-      let message1Width = meassage1.clientWidth;
-      let message1Hidth = meassage1.clientHeight;
+      let message1Width = meassage1.getBoundingClientRect().width;
 
       const utcDate = new Date();
       const offsetMinutes = utcDate.getTimezoneOffset();
       const gmtPlusOneOffset = 1 * 60 * 60 * 1000;
       const gmtPlusOneDate = new Date(utcDate.getTime() + gmtPlusOneOffset);
+      let dayOfMonth = utcDate.getDate();
+      let month = utcDate.getMonth() + 1;
+      let monthDisplay;
+
+      switch (month) {
+         case 1:
+            monthDisplay = "Jan";
+         break;
+         case 2:
+            monthDisplay = "Feb";
+         break;
+         case 3:
+            monthDisplay = "Mar";
+         break;
+         case 4:
+            monthDisplay = "Apr";
+         break;
+         case 5:
+            monthDisplay = "May";
+         break;
+         case 6:
+            monthDisplay = "Jun";
+         break;
+         case 7:
+            monthDisplay = "Jul";
+         break;
+         case 8:
+            monthDisplay = "Aug";
+         break;
+         case 9:
+            monthDisplay = "Sep";
+         break;
+         case 10:
+            monthDisplay = "Oct";
+         break;
+         case 11:
+            monthDisplay = "Nov";
+         break;
+         case 12:
+            monthDisplay = "Dec";
+         break;
+      }
       
       const hours = gmtPlusOneDate.getHours() - 1;
       const minutes = gmtPlusOneDate.getMinutes();
@@ -125,25 +301,18 @@ sendMessage1.addEventListener('click' , function(){
        
       let dateBox = document.createElement("div");
 
-      let dateBoxWidth = dateBox.clientWidth;
-
       dateBox.className = "dateBox";
       dateBox.style.width = message1Width + "px";
-      if (message1Hidth > 37) {
-         dateBox.style.width = message1Width - 1 + "px";
-      }
       meassageDiv11.append(dateBox);
 
       let messageTime = document.createElement("div");
       messageTime.innerHTML = formattedTime;
       dateBox.prepend(messageTime);
       
-      console.log(message1Width);
-      console.log(dateBoxWidth);
-
       let checkmark = document.createElement("div");
       checkmark.className = "checkmark material-icons";
       checkmark.style.fontSize = "20px";
+      checkmark.style.color = "white";
       checkmark.innerHTML = "check";
       dateBox.append(checkmark);
    
@@ -151,6 +320,32 @@ sendMessage1.addEventListener('click' , function(){
       typeingCounter = 0;
 
       dateBox.scrollIntoView({ behavior: "smooth", block: "end" });
+
+      let dateBox2 = document.createElement("div");
+      dateBox2.className = "dateBox2";
+      dateBox2.innerHTML = dayOfMonth + "." + monthDisplay;
+      meassageDiv1.append(dateBox2);
+
+      let msgDateId = Date.now();
+
+      meassageDiv11.addEventListener('mouseover' , function(){
+         checkmark.style.color = "black";
+         dateBox.style.backgroundColor = "#3E8944";
+         meassage1.style.backgroundColor = "#3E8944";
+      });
+       
+      meassageDiv11.addEventListener('mouseleave' , function(){
+         dateBox.style.backgroundColor = "#36EC8B";
+         meassage1.style.backgroundColor = "#36EC8B";
+      });
+
+      let msgId = msgDateId + usernameBox2.innerHTML;
+
+      let msgData = { msgSide: "prim" , id: msgId , user : usernameBox.innerHTML , value: meassage1.innerHTML , sentTime: formattedTime , sentDate: dayOfMonth + "." + monthDisplay};
+      let msgDataString = JSON.stringify(msgData);
+
+      localStorage.setItem('msgData'+ msgId , msgDataString);
+      
       }, 200);
    }
 });
@@ -198,11 +393,17 @@ $(messageInput2).keydown(function(event) {
       sendingDiv2.className = "sendingDiv2";
       messages.append(sendingDiv2)
 
-      sendingTextBox.className = "sendMessage";
-      sendingDiv2.append(sendingTextBox);
+      sendingTextBox2.className = "sendMessage";
+      sendingTextBox2.innerHTML = usernameBox2.innerHTML + " " + "is typeing";
+      sendingDiv2.append(sendingTextBox2);
 
-      sendingTextBox.scrollIntoView({ behavior: "smooth", block: "end" });
+      sendingTextBox2.scrollIntoView({ behavior: "smooth", block: "end" });
       
+      sendingTextBox2.append(dotsBox);
+
+      sendDots.innerHTML = "...";
+      sendDots.className = "sendDots";
+      dotsBox.append(sendDots);
    }
 });
 
@@ -219,7 +420,7 @@ $(messageInput2).keyup(function(event) {
          } else {
             setTimeout(() => {
                typeingCounter2 = 0;
-               sendingTextBox.remove();
+               sendingTextBox2.remove();
             }, 800);
          } 
    
@@ -244,9 +445,8 @@ sendMessage2.addEventListener('click' , function(){
          meassage2.className = "message2";
          meassage2.innerHTML = messageInput2.value;
          meassageDiv2.append(meassage2);
-   
-         let message2Width = meassage2.clientWidth;
-         let message2Hidth = meassage2.clientHeight;
+
+         let message2Width = meassage2.getBoundingClientRect().width;
    
          const utcDate = new Date();
          const offsetMinutes = utcDate.getTimezoneOffset();
@@ -256,6 +456,48 @@ sendMessage2.addEventListener('click' , function(){
          const hours = gmtPlusOneDate.getHours() - 1;
          const minutes = gmtPlusOneDate.getMinutes();
          const seconds = gmtPlusOneDate.getSeconds();
+         let dayOfMonth = utcDate.getDate();
+         let month = utcDate.getMonth() + 1;
+         let monthDisplay;
+
+      switch (month) {
+         case 1:
+            monthDisplay = "Jan";
+         break;
+         case 2:
+            monthDisplay = "Feb";
+         break;
+         case 3:
+            monthDisplay = "Mar";
+         break;
+         case 4:
+            monthDisplay = "Apr";
+         break;
+         case 5:
+            monthDisplay = "May";
+         break;
+         case 6:
+            monthDisplay = "Jun";
+         break;
+         case 7:
+            monthDisplay = "Jul";
+         break;
+         case 8:
+            monthDisplay = "Aug";
+         break;
+         case 9:
+            monthDisplay = "Sep";
+         break;
+         case 10:
+            monthDisplay = "Oct";
+         break;
+         case 11:
+            monthDisplay = "Nov";
+         break;
+         case 12:
+            monthDisplay = "Dec";
+         break;
+      }
    
          const formattedTime = `${padZero(hours)}:${padZero(minutes)}`;
          
@@ -265,13 +507,8 @@ sendMessage2.addEventListener('click' , function(){
           
          let dateBox = document.createElement("div");
    
-         let dateBoxWidth = dateBox.clientWidth;
-   
          dateBox.className = "dateBox";
          dateBox.style.width = message2Width + "px";
-         if (message2Hidth > 37) {
-            dateBox.style.width = message2Width - 1 + "px";
-         }
          meassageDiv22.append(dateBox);
    
          let messageTime = document.createElement("div");
@@ -281,6 +518,7 @@ sendMessage2.addEventListener('click' , function(){
          let checkmark = document.createElement("div");
          checkmark.className = "checkmark material-icons";
          checkmark.style.fontSize = "20px";
+         checkmark.style.color = "white";
          checkmark.innerHTML = "check";
          dateBox.append(checkmark);
       
@@ -288,7 +526,31 @@ sendMessage2.addEventListener('click' , function(){
          typeingCounter2 = 0;
 
          dateBox.scrollIntoView({ behavior: "smooth", block: "end" });
-      
+
+         let dateBox2 = document.createElement("div");
+         dateBox2.className = "dateBox2";
+         dateBox2.innerHTML = dayOfMonth + "." + monthDisplay;
+         meassageDiv2.append(dateBox2);
+
+         let msgDateId = Date.now();
+
+         meassageDiv22.addEventListener('mouseover' , function(){
+            checkmark.style.color = "black";
+            dateBox.style.backgroundColor = "#3E8944";
+            meassage2.style.backgroundColor = "#3E8944";
+         });
+          
+         meassageDiv22.addEventListener('mouseleave' , function(){
+            dateBox.style.backgroundColor = "#36EC8B";
+            meassage2.style.backgroundColor = "#36EC8B";
+         });
+
+         let msgId = msgDateId + usernameBox2.innerHTML;
+
+         let msgData = { msgSide: "seco" , id: msgId , user : usernameBox2.innerHTML , value: meassage2.innerHTML , sentTime: formattedTime , sentDate: dayOfMonth + "." + monthDisplay};
+         let msgDataString = JSON.stringify(msgData);
+
+         localStorage.setItem('msgData'+ msgId, msgDataString);
          }, 200);
    }
 });   
