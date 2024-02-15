@@ -3,13 +3,16 @@
    height: 100%;
    position: absolute;
    user-select: none;
+   z-index: 9;
+   overflow: hidden;
 }
 
 #screenBox {
    height: 100%;
    width: 70%;
    position: absolute;
-   z-index: 10;
+   z-index: 11;
+   overflow: hidden;
 }
 
 .tooltip {
@@ -45,7 +48,6 @@
    height: 10%;
    width: 100%;
    box-sizing: border-box;
-   background-color: blue;
 }
 
 #usernameInput {
@@ -56,20 +58,72 @@
    font-size: 25px;
 }
 
+#inputMessage {
+   width: 65%;
+   font-weight: 100;
+}
+
+#inputMessage::placeholder {
+   color: black;
+}
+
 #usernameInput::placeholder {
    color: white;
    font-size: 25px;
 }
 
 #msgInput {
+   gap: 10px;
+   margin-top: 10px;
    height: 50%;
    width: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
 }
 
 #filtersBox {
    height: 10%;
    width: 100%;
    padding: 10px 34px 5px 42px;
+   justify-content: flex-end;
+}
+
+#filter {
+   font-size: 35px;
+   cursor: pointer;
+   border-radius: 10px;
+   position: relative;
+}
+
+#filter:hover {
+   background-color: #CECECE;
+}
+
+.filerOptionsBox {
+   width: 150px;
+   height: 70px;
+   background-color: #CECECE;
+   border-radius: 10px;
+   border-top-right-radius: 0px;
+   position: absolute;
+   transform: translateX(-115px);
+   z-index: 120;
+}
+
+.moreOpt {
+   height: 35px;
+   width: 100%;
+   font-size: 18px;
+   color: black;
+   font-family: Arial, sans-serif;
+   display: flex;
+   align-items: center;
+   padding: 5px 10px;
+}
+
+.moreOpt:hover {
+   background-color: #A8A8A8;
 }
 
 .meassageDiv1 {
@@ -136,6 +190,32 @@
    font-weight: 600;
    white-space: nowrap;
    text-overflow: ellipsis;
+}
+
+.messageOptions {
+   width: 100px;
+   height: 85px;
+   background-color: #A350B7;
+   position: absolute;
+   z-index: 130;
+   box-sizing: border-box;
+}
+
+.msgOpt {
+   width: 100%;
+   height: 30px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   color: white;
+   font-size: 16px;
+   box-sizing: border-box;
+   padding: 2px 7px;
+   cursor: pointer;
+}
+
+.msgOpt:hover {
+   background-color: #6D2180;
 }
 
 .message1 {

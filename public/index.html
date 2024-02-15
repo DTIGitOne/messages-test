@@ -22,11 +22,21 @@
       <div id="middle" class="w-1/2 h-full flex justify-center items-center relative">
          <div id="screenBox" class="flex justify-center items-center">
             <div id="screen" class="flex flex-col">
-               <div id="filtersBox"></div>
+               <div id="filtersBox" class="flex items-center">
+                  <div id="filter" class="material-icons">more_vert</div>
+               </div>
                <div id="messages">
                </div>
                <div id="messageInput">
-                  <div id="msgInput"></div>
+                  <div id="msgInput">
+                     <input type="text" id="inputMessage" class="bg-slate-200 border-2 border-black rounded-xl p-1 text-xl" placeholder="send message">
+                     <button id="sendButton" class="w-5 bg-blue-400 hover:bg-blue-500 material-icons text-white p-2 pr-8 rounded-lg">send</button>
+                  </div>
+                  <div id="userSelectBox" class="w-full h-full flex justify-center items-center">
+                     <label class="mr-1">Please select a user:</label>
+                     <div id="leftUser" class="p-2 cursor-pointer hover:bg-slate-200 rounded-lg"></div>
+                     <div id="rightUser" class="p-2 cursor-pointer hover:bg-slate-200 rounded-lg text-red-600"></div>
+                  </div>
                </div>
             </div>
          </div>
