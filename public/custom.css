@@ -194,11 +194,13 @@
 
 .messageOptions {
    width: 100px;
-   height: 85px;
+   height: 90px;
    background-color: #A350B7;
    position: absolute;
    z-index: 130;
    box-sizing: border-box;
+   display: none;
+   flex-direction: column;
 }
 
 .msgOpt {

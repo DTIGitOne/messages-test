@@ -77,6 +77,58 @@ keys.forEach(function(key) {
                dateBox.style.backgroundColor = "#36EC8B";
                meassage1.style.backgroundColor = "#36EC8B";
             });
+
+            let messageOptions = document.createElement("div");
+            messageOptions.className = "messageOptions";
+            meassage1.append(messageOptions);
+  
+            let editBox = document.createElement("div");
+            editBox.className = "msgOpt";
+            messageOptions.append(editBox);
+
+            let editLogo = document.createElement("div");
+            editLogo.className = "material-icons";
+            editLogo.innerHTML = "edit";
+            editBox.append(editLogo);
+
+            let edit = document.createElement("div");
+            edit.innerHTML = "edit";
+            editBox.append(edit);
+
+            let deleteBox = document.createElement("div");
+            deleteBox.className = "msgOpt";
+            messageOptions.append(deleteBox);
+
+            let deleteLogo = document.createElement("div");
+            deleteLogo.className = "material-icons";
+            deleteLogo.innerHTML = "delete";
+            deleteBox.append(deleteLogo);
+
+            let delete1 = document.createElement("div");
+            delete1.innerHTML = "delete";
+            deleteBox.append(delete1);
+
+            let respondBox = document.createElement("div");
+            respondBox.className = "msgOpt";
+            messageOptions.append(respondBox);
+
+            let respondLogo = document.createElement("div");
+            respondLogo.className = "material-icons";
+            respondLogo.innerHTML = "subdirectory_arrow_right";
+            respondBox.append(respondLogo);
+
+            let respond1 = document.createElement("div");
+            respond1.innerHTML = "respond";
+            respondBox.append(respond1);
+
+            meassageDiv11.addEventListener('click' , function(){
+               messageOptions.style.display = "flex";
+            });
+            
+            meassageDiv11.addEventListener("mouseleave" , function(){
+               messageOptions.style.display = "none";
+            });
+
           } else if (parsedData.msgSide === "seco") {
             let meassageDiv22 = document.createElement("div");
             meassageDiv22.className = "meassageDiv22";
@@ -125,6 +177,49 @@ keys.forEach(function(key) {
             meassageDiv22.addEventListener('mouseleave' , function(){
                dateBox.style.backgroundColor = "#36EC8B";
                meassage2.style.backgroundColor = "#36EC8B";
+
+               let messageOptions = document.createElement("div");
+               messageOptions.className = "messageOptions";
+               meassage1.append(messageOptions);
+         
+               let editBox = document.createElement("div");
+               editBox.className = "msgOpt";
+               messageOptions.append(editBox);
+         
+               let editLogo = document.createElement("div");
+               editLogo.className = "material-icons";
+               editLogo.innerHTML = "edit";
+               editBox.append(editLogo);
+         
+               let edit = document.createElement("div");
+               edit.innerHTML = "edit";
+               editBox.append(edit);
+         
+               let deleteBox = document.createElement("div");
+               deleteBox.className = "msgOpt";
+               messageOptions.append(deleteBox);
+         
+               let deleteLogo = document.createElement("div");
+               deleteLogo.className = "material-icons";
+               deleteLogo.innerHTML = "delete";
+               deleteBox.append(deleteLogo);
+         
+               let delete1 = document.createElement("div");
+               delete1.innerHTML = "delete";
+               deleteBox.append(delete1);
+         
+               let respondBox = document.createElement("div");
+               respondBox.className = "msgOpt";
+               messageOptions.append(respondBox);
+         
+               let respondLogo = document.createElement("div");
+               respondLogo.className = "material-icons";
+               respondLogo.innerHTML = "subdirectory_arrow_right";
+               respondBox.append(respondLogo);
+         
+               let respond1 = document.createElement("div");
+               respond1.innerHTML = "respond";
+               respondBox.append(respond1);
             });
           }
     } else {
@@ -372,16 +467,37 @@ function msg1() {
 
       let deleteBox = document.createElement("div");
       deleteBox.className = "msgOpt";
-      messageOptions.append(deleteBoxt);
+      messageOptions.append(deleteBox);
 
       let deleteLogo = document.createElement("div");
       deleteLogo.className = "material-icons";
-      delteLogo.innerHTML = "delete";
+      deleteLogo.innerHTML = "delete";
       deleteBox.append(deleteLogo);
 
       let delete1 = document.createElement("div");
-      delte1.innerHTML = "delete";
-      editBox.append(delte1);
+      delete1.innerHTML = "delete";
+      deleteBox.append(delete1);
+
+      let respondBox = document.createElement("div");
+      respondBox.className = "msgOpt";
+      messageOptions.append(respondBox);
+
+      let respondLogo = document.createElement("div");
+      respondLogo.className = "material-icons";
+      respondLogo.innerHTML = "subdirectory_arrow_right";
+      respondBox.append(respondLogo);
+
+      let respond1 = document.createElement("div");
+      respond1.innerHTML = "respond";
+      respondBox.append(respond1);
+
+      meassageDiv11.addEventListener('click' , function(){
+         messageOptions.style.display = "flex";
+      });
+      
+      meassageDiv11.addEventListener("mouseleave" , function(){
+         messageOptions.style.display = "none";
+      });
 
       let msgId = msgDateId + usernameBox2.innerHTML;
 
