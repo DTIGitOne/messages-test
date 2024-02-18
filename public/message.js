@@ -43,7 +43,8 @@ keys.forEach(function(key) {
             meassageDiv1.append(meassage1);
       
             let message1Width = meassage1.getBoundingClientRect().width;
-      
+            let message1Height = meassage1.getBoundingClientRect().height;
+
             let dateBox = document.createElement("div");
       
             dateBox.className = "dateBox";
@@ -80,55 +81,65 @@ keys.forEach(function(key) {
 
             let messageOptions = document.createElement("div");
             messageOptions.className = "messageOptions";
-            meassage1.append(messageOptions);
-  
+            messageOptions.style.borderTopRightRadius = "10px";
+            messageOptions.style.borderBottomLeftRadius = "10px";
+            messageOptions.style.borderBottomRightRadius = "10px";
+            dateBox.append(messageOptions);
+      
             let editBox = document.createElement("div");
             editBox.className = "msgOpt";
+            editBox.style.borderTopRightRadius = "10px";
             messageOptions.append(editBox);
-
+      
             let editLogo = document.createElement("div");
             editLogo.className = "material-icons";
             editLogo.innerHTML = "edit";
             editBox.append(editLogo);
-
+      
             let edit = document.createElement("div");
             edit.innerHTML = "edit";
             editBox.append(edit);
-
+      
             let deleteBox = document.createElement("div");
             deleteBox.className = "msgOpt";
             messageOptions.append(deleteBox);
-
+      
             let deleteLogo = document.createElement("div");
             deleteLogo.className = "material-icons";
             deleteLogo.innerHTML = "delete";
             deleteBox.append(deleteLogo);
-
+      
             let delete1 = document.createElement("div");
             delete1.innerHTML = "delete";
             deleteBox.append(delete1);
-
+      
             let respondBox = document.createElement("div");
+            respondBox.style.borderBottomRightRadius = "10px";
+            respondBox.style.borderBottomLeftRadius = "10px";
             respondBox.className = "msgOpt";
             messageOptions.append(respondBox);
-
+      
             let respondLogo = document.createElement("div");
             respondLogo.className = "material-icons";
             respondLogo.innerHTML = "subdirectory_arrow_right";
             respondBox.append(respondLogo);
-
+      
             let respond1 = document.createElement("div");
             respond1.innerHTML = "respond";
             respondBox.append(respond1);
-
+      
             meassageDiv11.addEventListener('click' , function(){
                messageOptions.style.display = "flex";
+               checkmark.style.display = "none";
+               respondBox.scrollIntoView({ behavior: "smooth", block: "end" });
             });
             
             meassageDiv11.addEventListener("mouseleave" , function(){
                messageOptions.style.display = "none";
+               checkmark.style.display = "inline";
             });
-
+            
+            
           } else if (parsedData.msgSide === "seco") {
             let meassageDiv22 = document.createElement("div");
             meassageDiv22.className = "meassageDiv22";
@@ -144,7 +155,8 @@ keys.forEach(function(key) {
             meassageDiv2.append(meassage2);
       
             let message2Width = meassage2.getBoundingClientRect().width;
-      
+            let message2Height = meassage2.getBoundingClientRect().height;
+
             let dateBox = document.createElement("div");
       
             dateBox.className = "dateBox";
@@ -177,49 +189,66 @@ keys.forEach(function(key) {
             meassageDiv22.addEventListener('mouseleave' , function(){
                dateBox.style.backgroundColor = "#36EC8B";
                meassage2.style.backgroundColor = "#36EC8B";
+            });
 
-               let messageOptions = document.createElement("div");
-               messageOptions.className = "messageOptions";
-               meassage1.append(messageOptions);
-         
-               let editBox = document.createElement("div");
-               editBox.className = "msgOpt";
-               messageOptions.append(editBox);
-         
-               let editLogo = document.createElement("div");
-               editLogo.className = "material-icons";
-               editLogo.innerHTML = "edit";
-               editBox.append(editLogo);
-         
-               let edit = document.createElement("div");
-               edit.innerHTML = "edit";
-               editBox.append(edit);
-         
-               let deleteBox = document.createElement("div");
-               deleteBox.className = "msgOpt";
-               messageOptions.append(deleteBox);
-         
-               let deleteLogo = document.createElement("div");
-               deleteLogo.className = "material-icons";
-               deleteLogo.innerHTML = "delete";
-               deleteBox.append(deleteLogo);
-         
-               let delete1 = document.createElement("div");
-               delete1.innerHTML = "delete";
-               deleteBox.append(delete1);
-         
-               let respondBox = document.createElement("div");
-               respondBox.className = "msgOpt";
-               messageOptions.append(respondBox);
-         
-               let respondLogo = document.createElement("div");
-               respondLogo.className = "material-icons";
-               respondLogo.innerHTML = "subdirectory_arrow_right";
-               respondBox.append(respondLogo);
-         
-               let respond1 = document.createElement("div");
-               respond1.innerHTML = "respond";
-               respondBox.append(respond1);
+            let messageOptions = document.createElement("div");
+            messageOptions.className = "messageOptions";
+            messageOptions.style.borderTopLeftRadius = "10px";
+            messageOptions.style.borderBottomLeftRadius = "10px";
+            messageOptions.style.borderBottomRightRadius = "10px";
+            dateBox.append(messageOptions);
+      
+            let editBox = document.createElement("div");
+            editBox.style.borderTopLeftRadius = "10px";
+            editBox.className = "msgOpt";
+            messageOptions.append(editBox);
+      
+            let editLogo = document.createElement("div");
+            editLogo.className = "material-icons";
+            editLogo.innerHTML = "edit";
+            editBox.append(editLogo);
+      
+            let edit = document.createElement("div");
+            edit.innerHTML = "edit";
+            editBox.append(edit);
+      
+            let deleteBox = document.createElement("div");
+            deleteBox.className = "msgOpt";
+            messageOptions.append(deleteBox);
+      
+            let deleteLogo = document.createElement("div");
+            deleteLogo.className = "material-icons";
+            deleteLogo.innerHTML = "delete";
+            deleteBox.append(deleteLogo);
+      
+            let delete1 = document.createElement("div");
+            delete1.innerHTML = "delete";
+            deleteBox.append(delete1);
+      
+            let respondBox = document.createElement("div");
+            respondBox.style.borderBottomRightRadius = "10px";
+            respondBox.style.borderBottomLeftRadius = "10px";
+            respondBox.className = "msgOpt";
+            messageOptions.append(respondBox);
+      
+            let respondLogo = document.createElement("div");
+            respondLogo.className = "material-icons";
+            respondLogo.innerHTML = "subdirectory_arrow_right";
+            respondBox.append(respondLogo);
+      
+            let respond1 = document.createElement("div");
+            respond1.innerHTML = "respond";
+            respondBox.append(respond1);
+      
+            meassageDiv22.addEventListener('click' , function(){
+               messageOptions.style.display = "flex";
+               checkmark.style.display = "none";
+               respondBox.scrollIntoView({ behavior: "smooth", block: "end" });
+            });
+            
+            meassageDiv22.addEventListener("mouseleave" , function(){
+               messageOptions.style.display = "none";
+               checkmark.style.display = "inline";
             });
           }
     } else {
@@ -347,6 +376,7 @@ function msg1() {
       meassageDiv1.append(meassage1);
 
       let message1Width = meassage1.getBoundingClientRect().width;
+      let message1Height = meassage1.getBoundingClientRect().height;
 
       const utcDate = new Date();
       const offsetMinutes = utcDate.getTimezoneOffset();
@@ -450,9 +480,13 @@ function msg1() {
 
       let messageOptions = document.createElement("div");
       messageOptions.className = "messageOptions";
-      meassage1.append(messageOptions);
+      messageOptions.style.borderTopRightRadius = "10px";
+      messageOptions.style.borderBottomLeftRadius = "10px";
+      messageOptions.style.borderBottomRightRadius = "10px";
+      dateBox.append(messageOptions);
 
       let editBox = document.createElement("div");
+      editBox.style.borderTopRightRadius = "10px";
       editBox.className = "msgOpt";
       messageOptions.append(editBox);
 
@@ -479,6 +513,8 @@ function msg1() {
       deleteBox.append(delete1);
 
       let respondBox = document.createElement("div");
+      respondBox.style.borderBottomRightRadius = "10px";
+      respondBox.style.borderBottomLeftRadius = "10px";
       respondBox.className = "msgOpt";
       messageOptions.append(respondBox);
 
@@ -493,10 +529,13 @@ function msg1() {
 
       meassageDiv11.addEventListener('click' , function(){
          messageOptions.style.display = "flex";
+         checkmark.style.display = "none";
+         respondBox.scrollIntoView({ behavior: "smooth", block: "end" });
       });
       
       meassageDiv11.addEventListener("mouseleave" , function(){
          messageOptions.style.display = "none";
+         checkmark.style.display = "inline";
       });
 
       let msgId = msgDateId + usernameBox2.innerHTML;
@@ -617,7 +656,8 @@ function msg2() {
          meassageDiv2.append(meassage2);
 
          let message2Width = meassage2.getBoundingClientRect().width;
-   
+         let message2Height = meassage2.getBoundingClientRect().height;
+
          const utcDate = new Date();
          const offsetMinutes = utcDate.getTimezoneOffset();
          const gmtPlusOneOffset = 1 * 60 * 60 * 1000;
@@ -721,6 +761,67 @@ function msg2() {
             dateBox.style.backgroundColor = "#36EC8B";
             meassage2.style.backgroundColor = "#36EC8B";
          });
+
+         let messageOptions = document.createElement("div");
+            messageOptions.className = "messageOptions";
+            messageOptions.style.borderTopLeftRadius = "10px";
+            messageOptions.style.borderBottomLeftRadius = "10px";
+            messageOptions.style.borderBottomRightRadius = "10px";
+            dateBox.append(messageOptions);
+      
+            let editBox = document.createElement("div");
+            editBox.style.borderTopLeftRadius = "10px";
+            editBox.className = "msgOpt";
+            messageOptions.append(editBox);
+      
+            let editLogo = document.createElement("div");
+            editLogo.className = "material-icons";
+            editLogo.innerHTML = "edit";
+            editBox.append(editLogo);
+      
+            let edit = document.createElement("div");
+            edit.innerHTML = "edit";
+            editBox.append(edit);
+      
+            let deleteBox = document.createElement("div");
+            deleteBox.className = "msgOpt";
+            messageOptions.append(deleteBox);
+      
+            let deleteLogo = document.createElement("div");
+            deleteLogo.className = "material-icons";
+            deleteLogo.innerHTML = "delete";
+            deleteBox.append(deleteLogo);
+      
+            let delete1 = document.createElement("div");
+            delete1.innerHTML = "delete";
+            deleteBox.append(delete1);
+      
+            let respondBox = document.createElement("div");
+            respondBox.style.borderBottomRightRadius = "10px";
+            respondBox.style.borderBottomLeftRadius = "10px";
+            respondBox.className = "msgOpt";
+            messageOptions.append(respondBox);
+      
+            let respondLogo = document.createElement("div");
+            respondLogo.className = "material-icons";
+            respondLogo.innerHTML = "subdirectory_arrow_right";
+            respondBox.append(respondLogo);
+      
+            let respond1 = document.createElement("div");
+            respond1.innerHTML = "respond";
+            respondBox.append(respond1);
+      
+            meassageDiv22.addEventListener('click' , function(){
+               messageOptions.style.display = "flex";
+               checkmark.style.display = "none";
+               respondBox.scrollIntoView({ behavior: "smooth", block: "end" });
+            });
+            
+            meassageDiv22.addEventListener("mouseleave" , function(){
+               messageOptions.style.display = "none";
+               checkmark.style.display = "inline";
+            });
+   
 
          let msgId = msgDateId + usernameBox2.innerHTML;
 

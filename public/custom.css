@@ -196,11 +196,11 @@
    width: 100px;
    height: 90px;
    background-color: #A350B7;
-   position: absolute;
-   z-index: 130;
+   z-index: 230;
    box-sizing: border-box;
    display: none;
    flex-direction: column;
+   margin-top: 20px;
 }
 
 .msgOpt {
@@ -318,4 +318,8 @@
    position: relative;
    min-width: 70px;
    user-select: none;
+}
+
+.addonSpace {
+   height: 100px;
 }
