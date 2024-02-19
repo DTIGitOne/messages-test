@@ -42,6 +42,7 @@
    flex-direction: column;
    align-items: flex-start;
    scrollbar-width: none;
+   position: relative;
 }
 
 #messageInput {
@@ -384,4 +385,15 @@
 
  .toBottom:hover {
    background-color: #006BDD;
+ }
+
+ .delButton {
+   color: red;
+   cursor: pointer;
+   padding: 3px;
+   border-radius: 5px;
+ }
+
+ .delButton:hover {
+   background-color: #CECECE;
  }

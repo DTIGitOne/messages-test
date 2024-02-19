@@ -16,6 +16,7 @@ let sendButton = document.getElementById("sendButton");
 let leftUser = document.getElementById("leftUser");
 let rightUser = document.getElementById("rightUser");
 let toTop = document.getElementById("toTop");
+let msgHistory = document.createElement("div");
 
 function showErrorFlash(element) {
    element.classList.add('error');
@@ -25,20 +26,20 @@ function showErrorFlash(element) {
   }, 1000);
 }
 
-toTop.addEventListener('click' , function(){
-   let firstMessage = messages.firstElementChild;
-   firstMessage.scrollIntoView({ behavior: 'smooth' });
-});
-
 let toBottom = document.createElement("div");
 toBottom.className = "toBottom";
 toBottom.innerHTML = "Latest text";
 
+toTop.addEventListener('click' , function(){
+   let firstMessage = messages.firstElementChild;
+   firstMessage.scrollIntoView({ behavior: 'smooth' });
+   toBottom.remove();
+});
+
+
 function isAtBottom() {
    return messages.scrollTop + messages.clientHeight >= messages.scrollHeight;
 }
-
-let messageHeight = messages.getBoundingClientRect().height;
 
 messages.addEventListener('scroll', function() {
    if (isAtBottom()) {
@@ -48,23 +49,64 @@ messages.addEventListener('scroll', function() {
    }
 });
 
-document.addEventListener("DOMContentLoaded", function() {
-   setTimeout(function() {
-      let lastMessage = messages.lastElementChild;
-      lastMessage.scrollIntoView({ behavior: 'smooth' });
-   }, 100);
+function scrollToBottomOnClick(element) {
+   element.addEventListener('click', function() {
+       const scrollHeight = messages.scrollHeight;
+       messages.scrollTo({
+           top: scrollHeight,
+           behavior: 'smooth'
+       });
+   });
+}
 
-   if (messages.scrollHeight > messages.clientHeight) {
-      
+scrollToBottomOnClick(toBottom);
+
+function saveScrollPosition() {
+   localStorage.setItem('scrollPosition', messages.scrollTop);
+}
+
+function restoreScrollPosition() {
+   let scrollPosition = localStorage.getItem('scrollPosition');
+   if (scrollPosition) {
+       messages.scrollTop = scrollPosition;
    }
+}
+
+messages.addEventListener('scroll', function() {
+   saveScrollPosition();
 });
 
-toBottom.addEventListener('click' , function(){
-   setTimeout(function() {
-      let lastMessage = messages.lastElementChild;
-      lastMessage.scrollIntoView({ behavior: 'smooth' });
-   }, 150);
- });
+document.addEventListener("DOMContentLoaded", function() {
+   restoreScrollPosition();
+});
+
+let messageHeight = messages.getBoundingClientRect().height;
+
+filter.addEventListener('click' , function(){
+
+   let filerOptionsBox = document.createElement("div");
+   filerOptionsBox.className = "filerOptionsBox";
+   filter.append(filerOptionsBox);
+
+   let filterButton = document.createElement("div");
+   filterButton.innerHTML = "Filter By";
+   filterButton.className = "moreOpt";
+   filterButton.style.borderTopLeftRadius = "10px";
+   filerOptionsBox.append(filterButton);
+
+   msgHistory.className = "moreOpt";
+   msgHistory.innerHTML = "History";
+   msgHistory.style.borderBottomLeftRadius = "10px";
+   msgHistory.style.borderBottomRightRadius = "10px";
+   filerOptionsBox.append(msgHistory);
+
+   setTimeout(() => {
+      filter.addEventListener('mouseleave' , function(){
+         filerOptionsBox.remove();
+      });
+   }, 190);
+
+});
 
 let regexPattern = /^msg.*/;
 
@@ -79,6 +121,7 @@ keys.forEach(function(key) {
         let parsedData = JSON.parse(dataStorage);
         
         if (parsedData.msgSide === "prim") {
+         if (parsedData.existing === "true") {
             let meassageDiv11 = document.createElement("div");
             meassageDiv11.className = "meassageDiv11";
             messages.append(meassageDiv11);
@@ -177,8 +220,7 @@ keys.forEach(function(key) {
             let respond1 = document.createElement("div");
             respond1.innerHTML = "respond";
             respondBox.append(respond1);
-            
-            
+               
                meassageDiv11.addEventListener('click' , function(){
                   if (meassage1.contentEditable === "true") {
                      console.log("no");
@@ -279,12 +321,38 @@ keys.forEach(function(key) {
 
            $(document).ready(function(){
             $(deleteBox).on('dblclick', function(){
-               meassageDiv11.remove();
+               
+               showErrorFlash(meassage1);
+               showErrorFlash(dateBox);
+
+               let msgIdToUpdate = parsedData.id;                     
+               let storedData = localStorage.getItem('msgData' + msgIdToUpdate);
+               let msgData = JSON.parse(storedData);
+             
+               if (storedData) {
+                  msgData.existing = "false";
+            
+                  let updatedMsgDataString = JSON.stringify(msgData);
+              
+                  localStorage.setItem('msgData' + msgIdToUpdate, updatedMsgDataString);
+              }
+
+               setTimeout(() => {
+                  meassageDiv11.remove();
+                  location.reload();
+               }, 100);
             });
            });
+
            
+
+         } else if (parsedData.existing === "false") {
+            //deleted messages
+         }
           } else if (parsedData.msgSide === "seco") {
-            let meassageDiv22 = document.createElement("div");
+            if (parsedData.existing === "true") {
+               
+               let meassageDiv22 = document.createElement("div");
             meassageDiv22.className = "meassageDiv22";
             messages.append(meassageDiv22);
       
@@ -479,15 +547,181 @@ keys.forEach(function(key) {
 
            $(document).ready(function(){
             $(deleteBox).on('dblclick', function(){
-               meassageDiv22.remove();
+               showErrorFlash(meassage2);
+               showErrorFlash(dateBox);
+
+               let msgIdToUpdate = parsedData.id;                     
+               let storedData = localStorage.getItem('msgData' + msgIdToUpdate);
+               let msgData = JSON.parse(storedData);
+             
+               if (storedData) {
+                  msgData.existing = "false";
+            
+                  let updatedMsgDataString = JSON.stringify(msgData);
+              
+                  localStorage.setItem('msgData' + msgIdToUpdate, updatedMsgDataString);
+              }
+
+               setTimeout(() => {
+                  meassageDiv22.remove();
+                  location.reload();
+               }, 100);
             });
            });
-          }
+
+         }
+   
+          } 
     } else {
         console.log('Data not found in local storage');
     }
 });
 
+let hisCounter = 0
+
+let keysWithFalseValue = [];
+
+msgHistory.addEventListener("click", function() {
+   hisCounter++
+   
+   msgHistory.remove();
+
+   
+ 
+   if (hisCounter === 1) {}
+    keys.forEach(function(key) {
+        let dataStorage = localStorage.getItem(key);
+        if (dataStorage !== null) {
+            let parsedData = JSON.parse(dataStorage);
+            if (parsedData.existing === "false") {
+                keysWithFalseValue.push(key);
+            }
+        }
+    });
+
+    keysWithFalseValue.forEach(function(key) {
+      let dataStorage = localStorage.getItem(key);
+      let data = JSON.parse(dataStorage);
+      
+      if (data.msgSide === "prim") {
+            let meassageDiv11 = document.createElement("div");
+            meassageDiv11.className = "meassageDiv11";
+            messages.append(meassageDiv11);
+      
+            let meassageDiv1 = document.createElement("div");
+            meassageDiv1.className = "meassageDiv1";
+            meassageDiv11.append(meassageDiv1);
+      
+            let meassage1Del = document.createElement("p");
+            meassage1Del.className = "message1";
+            meassage1Del.innerHTML = data.value;
+            meassage1Del.style.backgroundColor = "#E83D3D";
+            meassageDiv1.append(meassage1Del);
+      
+            let message1WidthDel = meassage1Del.getBoundingClientRect().width;
+
+            let dateBox = document.createElement("div");
+      
+            dateBox.className = "dateBox";
+            dateBox.style.width = message1WidthDel + "px";
+            dateBox.style.backgroundColor = "#E83D3D";
+            meassageDiv11.append(dateBox);
+      
+            let messageTime = document.createElement("div");
+            messageTime.innerHTML = data.sentTime;
+            dateBox.prepend(messageTime);
+      
+            let dateBox2 = document.createElement("div");
+            dateBox2.className = "dateBox2";
+            dateBox2.innerHTML = data.sentDate;
+            meassageDiv1.append(dateBox2);
+
+            let trashButton = document.createElement("div");
+            trashButton.innerHTML = "delete_forever";
+            trashButton.className = "material-icons delButton";
+            meassageDiv1.append(trashButton);
+
+            trashButton.addEventListener('click' , function(){
+               meassageDiv11.remove();
+               localStorage.removeItem(key);
+            });
+
+            let restoreButton = document.createElement("div");
+            restoreButton.innerHTML = "restore";
+            restoreButton.className = "material-icons delButton";
+            restoreButton.style.color = "#36EC8B";
+            meassageDiv1.append(restoreButton);
+
+            restoreButton.addEventListener('click' , function(){
+               data.existing = "true";
+               localStorage.setItem(key, JSON.stringify(data));
+               setTimeout(() => {
+                  location.reload();
+               }, 100);
+            });
+
+      } else if (data.msgSide === "seco") {
+            let meassageDiv22 = document.createElement("div");
+            meassageDiv22.className = "meassageDiv22";
+            messages.append(meassageDiv22);
+      
+            let meassageDiv2 = document.createElement("div");
+            meassageDiv2.className = "meassageDiv2";
+            meassageDiv22.append(meassageDiv2);
+      
+            let meassage2Del = document.createElement("p");
+            meassage2Del.className = "message2";
+            meassage2Del.innerHTML = data.value;
+            meassage2Del.style.backgroundColor = "#E83D3D";
+            meassageDiv2.append(meassage2Del);
+      
+            let message2WidthDel = meassage2Del.getBoundingClientRect().width;
+
+            let dateBox = document.createElement("div");
+      
+            dateBox.className = "dateBox";
+            dateBox.style.width = message2WidthDel + "px";
+            dateBox.style.backgroundColor = "#E83D3D";
+            meassageDiv22.append(dateBox);
+      
+            let messageTime = document.createElement("div");
+            messageTime.innerHTML = data.sentTime;
+            dateBox.prepend(messageTime);
+      
+            let dateBox2 = document.createElement("div");
+            dateBox2.className = "dateBox2";
+            dateBox2.innerHTML = data.sentDate;
+            meassageDiv2.append(dateBox2);
+
+            let trashButton = document.createElement("div");
+            trashButton.innerHTML = "delete_forever";
+            trashButton.className = "material-icons delButton";
+            meassageDiv2.append(trashButton);
+
+            trashButton.addEventListener('click' , function(){
+               meassageDiv22.remove();
+               localStorage.removeItem(key);
+            });
+
+            let restoreButton = document.createElement("div");
+            restoreButton.innerHTML = "restore";
+            restoreButton.className = "material-icons delButton";
+            restoreButton.style.color = "#36EC8B";
+            meassageDiv2.append(restoreButton);
+
+            restoreButton.addEventListener('click' , function(){
+               data.existing = "true";
+               localStorage.setItem(key, JSON.stringify(data));
+               setTimeout(() => {
+                  location.reload();
+               }, 100);
+            });
+      }
+
+
+    });
+
+});
 
 
 
@@ -772,13 +1006,17 @@ function msg1() {
 
       let msgId = msgDateId + usernameBox2.innerHTML;
 
-      let msgData = { msgSide: "prim" , id: msgId , user : usernameBox.innerHTML , value: meassage1.innerHTML , sentTime: formattedTime , sentDate: dayOfMonth + "." + monthDisplay};
+      let msgData = { msgSide: "prim" , id: msgId , user : usernameBox.innerHTML , value: meassage1.innerHTML , sentTime: formattedTime , sentDate: dayOfMonth + "." + monthDisplay , existing: "true"};
       let msgDataString = JSON.stringify(msgData);
       console.log(formattedTime);
       localStorage.setItem('msgData'+ msgId , msgDataString);
 
-      location.reload();
-      
+      dateBox.scrollIntoView();
+
+      setTimeout(() => {
+         location.reload();
+      }, 50);
+
       }, 200);
    }
 };
@@ -898,7 +1136,7 @@ function msg2() {
          const gmtPlusOneDate = new Date(utcDate.getTime() + gmtPlusOneOffset);
          
          let hours = gmtPlusOneDate.getUTCHours();
-         const minutes = gmtPlusOneDate.getMinutes();
+         let minutes = gmtPlusOneDate.getMinutes();
          let dayOfMonth = utcDate.getDate();
          let month = utcDate.getMonth() + 1;
          let monthDisplay;
@@ -1059,51 +1297,28 @@ function msg2() {
 
          let msgId = msgDateId + usernameBox2.innerHTML;
 
-         let msgData = { msgSide: "seco" , id: msgId , user : usernameBox2.innerHTML , value: meassage2.innerHTML , sentTime: formattedTime , sentDate: dayOfMonth + "." + monthDisplay};
+         let msgData = { msgSide: "seco" , id: msgId , user : usernameBox2.innerHTML , value: meassage2.innerHTML , sentTime: formattedTime , sentDate: dayOfMonth + "." + monthDisplay , existing: "true"};
          let msgDataString = JSON.stringify(msgData);
 
          localStorage.setItem('msgData'+ msgId, msgDataString);
 
-         location.reload();
+         dateBox.scrollIntoView();
+
+         setTimeout(() => {
+            location.reload();
+         }, 50);
          }, 200);
    }
 };
 
 sendMessage2.addEventListener('click' , msg2);   
 
-filter.addEventListener('click' , function(){
-
-   let filerOptionsBox = document.createElement("div");
-   filerOptionsBox.className = "filerOptionsBox";
-   filter.append(filerOptionsBox);
-
-   let filterButton = document.createElement("div");
-   filterButton.innerHTML = "Filter By";
-   filterButton.className = "moreOpt";
-   filterButton.style.borderTopLeftRadius = "10px";
-   filerOptionsBox.append(filterButton);
-
-   let msgHistory = document.createElement("div");
-   msgHistory.className = "moreOpt";
-   msgHistory.innerHTML = "History";
-   msgHistory.style.borderBottomLeftRadius = "10px";
-   msgHistory.style.borderBottomRightRadius = "10px";
-   filerOptionsBox.append(msgHistory);
-
-   setTimeout(() => {
-      filter.addEventListener('mouseleave' , function(){
-         filerOptionsBox.remove();
-      });
-   }, 190);
-
-});
-
 leftUser.innerHTML = usernameBox.innerHTML;
 rightUser.innerHTML = usernameBox2.innerHTML;
 
 let userSelector = 1;
 
-leftUser.addEventListener('click' , function(){
+document.addEventListener("DOMContentLoaded" , function(){
 
    leftUser.style.backgroundColor = "#41C3FF";
    leftUser.style.color = "white";
@@ -1175,5 +1390,3 @@ leftUser.addEventListener('click' , function(){
    } 
 });
 
-
-    
