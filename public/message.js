@@ -15,18 +15,68 @@ let inputMessage = document.getElementById("inputMessage");
 let sendButton = document.getElementById("sendButton");
 let leftUser = document.getElementById("leftUser");
 let rightUser = document.getElementById("rightUser");
+let toTop = document.getElementById("toTop");
 
-var regexPattern = /^msg.*/;
+function showErrorFlash(element) {
+   element.classList.add('error');
 
-var keys = Object.keys(localStorage).filter(function(key) {
+   setTimeout(function() {
+      element.classList.remove('error');
+  }, 1000);
+}
+
+toTop.addEventListener('click' , function(){
+   let firstMessage = messages.firstElementChild;
+   firstMessage.scrollIntoView({ behavior: 'smooth' });
+});
+
+let toBottom = document.createElement("div");
+toBottom.className = "toBottom";
+toBottom.innerHTML = "Latest text";
+
+function isAtBottom() {
+   return messages.scrollTop + messages.clientHeight >= messages.scrollHeight;
+}
+
+let messageHeight = messages.getBoundingClientRect().height;
+
+messages.addEventListener('scroll', function() {
+   if (isAtBottom()) {
+       toBottom.remove();
+   } else {
+         messages.append(toBottom);
+   }
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+   setTimeout(function() {
+      let lastMessage = messages.lastElementChild;
+      lastMessage.scrollIntoView({ behavior: 'smooth' });
+   }, 100);
+
+   if (messages.scrollHeight > messages.clientHeight) {
+      
+   }
+});
+
+toBottom.addEventListener('click' , function(){
+   setTimeout(function() {
+      let lastMessage = messages.lastElementChild;
+      lastMessage.scrollIntoView({ behavior: 'smooth' });
+   }, 150);
+ });
+
+let regexPattern = /^msg.*/;
+
+let keys = Object.keys(localStorage).filter(function(key) {
     return regexPattern.test(key);
 }).sort(); 
 
 keys.forEach(function(key) {
-    var dataStorage = localStorage.getItem(key);
+    let dataStorage = localStorage.getItem(key);
     
     if (dataStorage !== null) {
-        var parsedData = JSON.parse(dataStorage);
+        let parsedData = JSON.parse(dataStorage);
         
         if (parsedData.msgSide === "prim") {
             let meassageDiv11 = document.createElement("div");
@@ -127,19 +177,112 @@ keys.forEach(function(key) {
             let respond1 = document.createElement("div");
             respond1.innerHTML = "respond";
             respondBox.append(respond1);
-      
-            meassageDiv11.addEventListener('click' , function(){
-               messageOptions.style.display = "flex";
-               checkmark.style.display = "none";
-               respondBox.scrollIntoView({ behavior: "smooth", block: "end" });
-            });
+            
+            
+               meassageDiv11.addEventListener('click' , function(){
+                  if (meassage1.contentEditable === "true") {
+                     console.log("no");
+                  } else {
+                     messageOptions.style.display = "flex";
+                     checkmark.style.display = "none";
+                     respondBox.scrollIntoView({ behavior: "smooth", block: "end" });
+                  }
+               });
             
             meassageDiv11.addEventListener("mouseleave" , function(){
                messageOptions.style.display = "none";
                checkmark.style.display = "inline";
             });
+
+            $(document).ready(function(){
+               $(editBox).on('dblclick', function(){
+                  messageOptions.style.display = "none";
+                  dateBox2.style.display = "none";
+                  
+                  let okButton = document.createElement("div");
+                  okButton.className = "material-icons hover:text-green-500 cursor-pointer";
+                  okButton.innerHTML = "check";
+                  meassageDiv1.append(okButton);
+
+                  let noButton = document.createElement("div");
+                  noButton.className = "material-icons hover:text-red-500 cursor-pointer";
+                  noButton.innerHTML = "close";
+                  meassageDiv1.append(noButton);
+
+                  meassage1.contentEditable = "true";
+                  
+                  meassage1.focus();
+                  dateBox.style.visibility = "hidden";
+
+                  let msgIdToUpdate = parsedData.id;                     
+                  let storedData = localStorage.getItem('msgData' + msgIdToUpdate);
+
+                  let msgData = JSON.parse(storedData);
+
+                  $(okButton).click(function(){
+                     if (meassage1.innerHTML !== "") {
+                     okButton.remove();
+                     noButton.remove();
+                     meassage1.contentEditable = "false";
+                     dateBox2.style.display = "flex";
+                     dateBox.style.visibility = "visible";
+                     let message1Width2 = meassage1.getBoundingClientRect().width;
+                     dateBox.style.width = message1Width2 + "px";
+
+
+                     if (storedData) {
+                        msgData.value = meassage1.innerHTML;
+                  
+                        let updatedMsgDataString = JSON.stringify(msgData);
+                    
+                        localStorage.setItem('msgData' + msgIdToUpdate, updatedMsgDataString);
+
+                        meassage1.innerHTML = msgData.value;
+
+                        location.reload();
+                    }
+                     } else {
+                        showErrorFlash(meassage1);
+                        meassage1.innerHTML = msgData.value;
+                     }
+
+                   });
+
+                   $(noButton).click(function(){
+                     okButton.remove();
+                     noButton.remove();
+                     meassage1.contentEditable = "false";
+                     dateBox2.style.display = "flex";
+                     dateBox.style.visibility = "visible";
+                     meassage1.innerHTML = msgData.value;
+                   });
             
-            
+                   $(meassage1).on('blur', function() {
+                     setTimeout(() => {
+                        okButton.remove();
+                        noButton.remove();
+                        meassage1.contentEditable = "false";
+                        dateBox2.style.display = "flex";
+                        dateBox.style.visibility = "visible";
+                        meassage1.innerHTML = msgData.value;
+                        showErrorFlash(meassage1);
+                        if (meassage1.innerHTML === "") {
+                           meassage1.innerHTML = msgData.value;
+                           showErrorFlash(meassage1);
+                        } 
+                     }, 300);
+                     
+                 });
+
+               });
+           });
+
+           $(document).ready(function(){
+            $(deleteBox).on('dblclick', function(){
+               meassageDiv11.remove();
+            });
+           });
+           
           } else if (parsedData.msgSide === "seco") {
             let meassageDiv22 = document.createElement("div");
             meassageDiv22.className = "meassageDiv22";
@@ -250,6 +393,95 @@ keys.forEach(function(key) {
                messageOptions.style.display = "none";
                checkmark.style.display = "inline";
             });
+
+            $(document).ready(function(){
+               $(editBox).on('dblclick', function(){
+                  messageOptions.style.display = "none";
+                  dateBox2.style.display = "none";
+
+                  let noButton = document.createElement("div");
+                  noButton.className = "material-icons hover:text-red-500 cursor-pointer";
+                  noButton.innerHTML = "close";
+                  meassageDiv2.append(noButton);
+                  
+                  let okButton = document.createElement("div");
+                  okButton.className = "material-icons hover:text-green-500 cursor-pointer";
+                  okButton.innerHTML = "check";
+                  meassageDiv2.append(okButton);
+
+                  meassage2.contentEditable = "true";
+                  
+                  meassage2.focus();
+                  dateBox.style.visibility = "hidden";
+
+                  let msgIdToUpdate = parsedData.id;                     
+                  let storedData = localStorage.getItem('msgData' + msgIdToUpdate);
+
+                  let msgData = JSON.parse(storedData);
+
+                  $(okButton).click(function(){
+                     if (meassage2.innerHTML !== "") {
+                     okButton.remove();
+                     noButton.remove();
+                     meassage2.contentEditable = "false";
+                     dateBox2.style.display = "flex";
+                     dateBox.style.visibility = "visible";
+                     let message2Width2 = meassage2.getBoundingClientRect().width;
+                     dateBox.style.width = message2Width2 + "px";
+
+
+                     if (storedData) {
+                        msgData.value = meassage2.innerHTML;
+                  
+                        let updatedMsgDataString = JSON.stringify(msgData);
+                    
+                        localStorage.setItem('msgData' + msgIdToUpdate, updatedMsgDataString);
+
+                        meassage2.innerHTML = msgData.value;
+
+                        location.reload();
+                    }
+                     } else {
+                        showErrorFlash(meassage2);
+                        meassage2.innerHTML = msgData.value;
+                     }
+
+                   });
+
+                   $(noButton).click(function(){
+                     okButton.remove();
+                     noButton.remove();
+                     meassage2.contentEditable = "false";
+                     dateBox2.style.display = "flex";
+                     dateBox.style.visibility = "visible";
+                     meassage2.innerHTML = msgData.value;
+                   });
+            
+                   $(meassage2).on('blur', function() {
+                     setTimeout(() => {
+                        okButton.remove();
+                        noButton.remove();
+                        meassage2.contentEditable = "false";
+                        dateBox2.style.display = "flex";
+                        dateBox.style.visibility = "visible";
+                        meassage2.innerHTML = msgData.value;
+                        showErrorFlash(meassage2);
+                        if (meassage2.innerHTML === "") {
+                           showErrorFlash(meassage2);
+                           meassage2.innerHTML = msgData.value;
+                        }
+                     }, 300);
+                     
+                 });
+
+               });
+           });
+
+           $(document).ready(function(){
+            $(deleteBox).on('dblclick', function(){
+               meassageDiv22.remove();
+            });
+           });
           }
     } else {
         console.log('Data not found in local storage');
@@ -544,6 +776,8 @@ function msg1() {
       let msgDataString = JSON.stringify(msgData);
       console.log(formattedTime);
       localStorage.setItem('msgData'+ msgId , msgDataString);
+
+      location.reload();
       
       }, 200);
    }
@@ -829,6 +1063,8 @@ function msg2() {
          let msgDataString = JSON.stringify(msgData);
 
          localStorage.setItem('msgData'+ msgId, msgDataString);
+
+         location.reload();
          }, 200);
    }
 };
@@ -940,5 +1176,4 @@ leftUser.addEventListener('click' , function(){
 });
 
 
-
-   
+    

@@ -132,6 +132,7 @@
    display: flex;
    overflow-y: visible;
    gap: 7px;
+   align-items: flex-end;
 }
 
 .meassageDiv11 {
@@ -156,6 +157,7 @@
    display: flex;
    overflow-y: visible;
    gap: 7px;
+   align-items: flex-end;
 }
 
 .sendingDiv1 {
@@ -323,3 +325,63 @@
 .addonSpace {
    height: 100px;
 }
+
+.scroll-btn {
+   position: absolute;
+   bottom: 10px;
+   width: 100px;
+   padding: 5px;
+   cursor: pointer;
+   background-color: #007bff;
+   color: #fff;
+   border: none;
+   border-radius: 5px;
+   outline: none;
+   display: none; /* Initially hidden */
+ }
+ 
+ .scroll-top-btn {
+   right: 10px;
+ }
+ 
+ .scroll-bottom-btn {
+   left: 10px;
+ }
+
+ .error {
+   animation-duration: 1s;
+   animation-name: error1;
+   background-color: red;
+ }
+
+ @keyframes error1 {
+   0% {background-color: red;}
+   100% {background-color: #36EC8B;}
+ }
+
+ #toTop {
+   font-size: 35px;
+   cursor: pointer;
+   border-radius: 10px;
+   position: relative;
+   margin-right: 5px;
+ }
+
+ #toTop:hover {
+   background-color: #CECECE;
+ }
+
+ .toBottom {
+   position: fixed;
+   background: #007bff;
+   color: white;
+   font-size: 20px;
+   border-radius: 7px;
+   padding: 3px;
+   z-index: 300;
+   cursor: pointer;
+ }
+
+ .toBottom:hover {
+   background-color: #006BDD;
+ }
